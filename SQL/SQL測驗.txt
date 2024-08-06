@@ -1,186 +1,192 @@
 --1. 整理EXCEL。
 --2. 在資料庫中建立資料表。
-
-create table Miaoli_building(
-    building_id char(4) primary key,
-    address NVARCHAR2(50),
-    building_type CHAR(4),
-    floors INTEGER,
-    max_people INTEGER,   
-    office char(4),
-    station char(4)
+create table MIAOLI_BUILDING (
+    BUILDING_ID char(4) primary key,
+    ADDRESS nvarchar2(50),
+    BUILDING_TYPE char(4),
+    FLOORS integer,
+    MAX_PEOPLE integer,
+    OFFICE char(4),
+    STATION char(4),
+    constraint FK_BUILDING_TYPE foreign key (BUILDING_TYPE) references BUILDING_TYPE(TYPE_ID),
+    constraint FK_OFFICE foreign key (OFFICE) references OFFICE_DETAIL(OFFICE_ID),
+    constraint FK_STATION foreign key (STATION) references STATION_DETAIL(STATION_ID)
 );
-
-create table office_detail(
-    office_id CHAR(4) primary key,
-    village  NVARCHAR2(10), 
-    address NVARCHAR2(50),
-    tel NVARCHAR2(10)
+create table MIAOLI_BUILDING(
+    BUILDING_ID char(4) primary key,
+    ADDRESS NVARCHAR2(50),
+    Building_Type CHAR(4),
+    Floors INTEGER,
+    MAX_PEOPLE INTEGER,   
+    OFFICE char(4),
+    STATION char(4)
+);
+create table OFFICE_DETAIL(
+    OFFICE_ID CHAR(4) primary key,
+    Village  NVARCHAR2(10), 
+    Address NVARCHAR2(50),
+    TEL NVARCHAR2(10)
 )
-create table station_detail(
-    station_id CHAR(4) primary key,
-    station_name  NVARCHAR2(10), 
-    address NVARCHAR2(50),
-    tel NVARCHAR2(10)
+create table STATION_DETAIL(
+    STATION_ID CHAR(4) primary key,
+    STATION_NAME  NVARCHAR2(10), 
+    Address NVARCHAR2(50),
+    Tel NVARCHAR2(10)
 );
-
-create table building_type(
-    type_id CHAR(4) primary key,
-    building NVARCHAR2(10)
+create table BUILDING_TYPE(
+    TYPE_ID CHAR(4) primary key,
+    BUILDING NVARCHAR2(10)
 );
 
 --3. 將表格內資料新增至資料表內。
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B001', '苗栗縣竹南鎮中埔街20號', 'T001', 1, 100, 'C001', 'M001');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B002', '苗栗縣竹南鎮和平街79號', 'T002', 1, 3142, 'C002', 'M001');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B003', '苗栗縣竹南鎮龍山路三段142號', 'T002', 1, 1072, 'C003', 'M001');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B004', '苗栗縣後龍鎮中華路1498號', 'T003', 1, 32, 'C004', 'M001');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B005', '苗栗縣苗栗市米市街80號', 'T001', 1, 106, 'C005', 'M002');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B006', '苗栗縣苗栗市光復路117號', 'T001', 1, 26, 'C005', 'M002');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B007', '苗栗縣苗栗市博愛街109號', 'T002', 2, 2038, 'C005', 'M002');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B008', '苗栗縣苗栗市大同路53號', 'T002', 2, 128, 'C005', 'M002');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B009', '苗栗縣頭份市民族里和平路102號', 'T003', 1, 353, 'C006', 'M003');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B010', '苗栗縣頭份市忠孝忠孝一路69號', 'T004', 1, 501, 'C007', 'M003');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B011', '苗栗縣頭份市信義里中正路65號', 'T001', 1, 194, 'C008', 'M003');
 
-insert into Miaoli_building
+insert into MIAOLI_BUILDING
 values ('B012', '苗栗縣頭份市信義里中正路116號', 'T004', 1, 78, 'C008', 'M003');
 
 --office_detail
-insert into office_detail
+insert into OFFICE_DETAIL
 values ('C001', '大埔里', '竹南鎮公義路1035號', '037581072');
 
-insert into office_detail
+insert into OFFICE_DETAIL
 values ('C002', '竹南里', '竹南鎮竹南里中山路103號', '037472735');
 
-insert into office_detail
+insert into OFFICE_DETAIL
 values ('C003', '山佳里', '竹南鎮山佳里國光街14號', '037614186');
 
-insert into office_detail
+insert into OFFICE_DETAIL
 values ('C004', '埔頂里', '後龍鎮埔頂里中興路136-1號', '037724839');
 
-insert into office_detail
+insert into OFFICE_DETAIL
 values ('C005', '綠苗里', '苗栗市綠苗里中正路766號', '037333240');
 
-insert into office_detail
+insert into OFFICE_DETAIL
 values ('C006', '民族里', '民族里民族路96號', '037660001');
 
-insert into office_detail
+insert into OFFICE_DETAIL
 values ('C007', '忠孝里', '忠孝里光大街82號', '037661145');
 
-insert into office_detail
+insert into OFFICE_DETAIL
 values ('C008', '信義里', '信義里信義路53巷1號', '037616072');
 
 --station_detail
-insert into station_detail
+insert into STATION_DETAIL
 values ('M001', '竹南分局', '苗栗縣竹南鎮民族街72號', '037474796');
 
-insert into station_detail
+insert into STATION_DETAIL
 values ('M002', '苗栗分局', '苗栗縣苗栗市金鳳街109號', '037320059');
 
-insert into station_detail
+insert into STATION_DETAIL
 values ('M003', '頭份分局', '苗栗縣頭份市中興路503號', '037663004');
 
 -- building_type
-insert into building_type
+insert into BUILDING_TYPE
 values ('T001', '公寓');
 
-insert into building_type
+insert into BUILDING_TYPE
 values ('T002', '大樓');
 
-insert into building_type
+insert into BUILDING_TYPE
 values ('T003', '公共設施');
 
-insert into building_type
+insert into BUILDING_TYPE
 values ('T004', '私營單位');
-
-
 
 --【實作練習 4 – 資料查詢】
 --4-1. 列出轄管區域內有單一避難設施大於 1000 容人數量的轄管分局及分局連絡電話。
-select distinct 
-    station.station_name, station.tel
-from 
-    Miaoli_Building Miaoli
-right join 
-    Station_detail station on Miaoli.station = station.station_id
-where 
-    miaoli.max_people>1000
+select distinct STATION.STATION_NAME as "轄管分局", 
+                STATION.TEL as "分局連絡電話"
+ from STUDENT.MIAOLI_BUILDING MIAOLI
+ right join STATION_DETAIL STATION on MIAOLI.STATION = STATION.STATION_ID
+ where MIAOLI.MAX_PEOPLE>1000;
+ commit;
 
 --4-2. 列出轄管區域內有單一避難設施大於 1000 容人數量的轄管分局及分局連絡電話,並計算出設施數量。(關鍵字:partition)
-select 
-    station.station_name as station,
-    station.tel,
-    count(station.station_name) as CNT
-from 
-    Miaoli_Building Miaoli
-left join 
-    Station_detail station on Miaoli.station = station.station_id
-where 
-    miaoli.max_people>1000
-group by 
-    station_name, station.tel
-having count
-    (station.station_name)>0
-
---4-3. 承上題,再補上避難設施地址、類型。
-select  
-    Miaoli.address, building.building, station.station_name, station.tel
-from 
-    Miaoli_Building Miaoli
-right join Station_detail station on Miaoli.station = station.station_id
-right join building_type building on Miaoli.building_type = building.type_id
-where 
-    miaoli.max_people>1000
-
+select distinct STATION.STATION_NAME as "轄管分局", 
+       STATION.TEL as "分局連絡電話",
+       count(MIAOLI.BUILDING_ID) over (partition by STATION.STATION_NAME, STATION.TEL) as FACILITY_COUNT
+ from MIAOLI_BUILDING MIAOLI
+ join STATION_DETAIL STATION on MIAOLI.STATION = STATION.STATION_ID
+ where MIAOLI.MAX_PEOPLE > 1000;
+ commit;
+ 
+--4-3. 承上題,再補上避難設施地址、類型。        
+select  MIAOLI.ADDRESS as "設施地址", 
+        BUILDING.BUILDING as "設施類型",
+        STATION.STATION_NAME as "轄管分局", 
+        STATION.TEL as "分局連絡電話",
+       count(MIAOLI.BUILDING_ID) over (partition by STATION.STATION_NAME, STATION.TEL) as FACILITY_COUNT
+ from MIAOLI_BUILDING MIAOLI
+ right join STATION_DETAIL STATION on MIAOLI.STATION = STATION.STATION_ID
+ right join BUILDING_TYPE BUILDING on MIAOLI.BUILDING_TYPE = BUILDING.TYPE_ID
+ where MIAOLI.MAX_PEOPLE > 1000;
+ commit;
+ 
 --4-4. 查詢設施地址包含「中」字的避難設施,列出資料必須含村里別、避難設施地址、容人數量、轄管分局及分局連絡電話。
 select  
-    office.village, miaoli.address, miaoli.max_people, station.station_name, station.tel
-from 
-    Miaoli_Building Miaoli
-right join Station_detail station on Miaoli.station = station.station_id
-right join office_detail office on Miaoli.office = office.office_id
-where
-    miaoli.address like '%中%';
- 
+    OFFICE.VILLAGE as "村里別", 
+    MIAOLI.ADDRESS as "設施地址", 
+    MIAOLI.MAX_PEOPLE as "容人數量", 
+    STATION.STATION_NAME as "轄管分局", 
+    STATION.TEL as "分局連絡電話"
+ from 
+    MIAOLI_BUILDING MIAOLI
+ right join STATION_DETAIL STATION on MIAOLI.STATION = STATION.STATION_ID
+ right join OFFICE_DETAIL OFFICE on MIAOLI.OFFICE = OFFICE.OFFICE_ID
+ where
+    MIAOLI.ADDRESS like '%中%';
+  commit;
+  
 --4-5. 查詢所有類別為公寓及大樓的避難設施,列出資料必須包含村里別、村里辦公室位置、避難設施地址、容人數量。
 select  
-    office.village, office.address as office_addr, miaoli.address as building_addr, miaoli.max_people
-from 
-    Miaoli_Building Miaoli
-right join office_detail office on Miaoli.office = office.office_id
-where
-    miaoli.building_type = 'T001' or
-    miaoli.building_type = 'T002'
+    OFFICE.VILLAGE, as "村里別",
+    OFFICE.ADDRESS as "辦公室地址", 
+    MIAOLI.ADDRESS as "設施地址", 
+    MIAOLI.MAX_PEOPLE as "容人數量"
+ from MIAOLI_BUILDING MIAOLI
+ right join OFFICE_DETAIL OFFICE on MIAOLI.OFFICE = OFFICE.OFFICE_ID
+ where MIAOLI.BUILDING_TYPE in ( 'T001', 'T002' );
+ commit;     
     
 --【實作練習 5 – 資料操控】
 --5-1. 更新避難設施地址是「苗栗縣竹南鎮和平街 79 號」的容人數量為 5000 人。
-update miaoli_building 
-set max_people = 5000
-where  address='苗栗縣竹南鎮和平街79號';
-commit;
-
+update MIAOLI_BUILDING 
+ set MAX_PEOPLE = 3142
+ where  ADDRESS='苗栗縣竹南鎮和平街79號';
+ commit;
+ 
 --5-2. 刪除避難設施小於 1000 容人數量的資料。
-delete from miaoli_building
-where max_people <1000;
-commit;
+delete from MIAOLI_BUILDING
+ where MAX_PEOPLE < 1000;
+ commit;
