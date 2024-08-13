@@ -36,7 +36,7 @@ public class Calendar {
 		str.append('\t').append(currentYear).append("年")
 		.append(enterMonth).append("月").append('\n')
 		.append("---------------------").append('\n')
-		.append("日 一  二  三  四  五  六").append('\n')
+		.append("日  一  二  三  四  五  六").append('\n')
 		.append("=====================");
 		System.out.println(str.toString());
 		str.setLength(0);
@@ -51,21 +51,19 @@ public class Calendar {
         //daysInMonth每月的天數
         int daysInMonth = currentYearMonth.lengthOfMonth(); 
         
-        //在每周的第幾天
+        //在每周的第幾天 
         int firstDayOfWeek = firstDayOfMonth.getDayOfWeek().getValue()+1;
         
-        //以八月為例，firstDayOfWeek=5
-        //空的天入用3個空白字元代替 
+        //空的天用3個空白字元代替 
         int i = 1;
         while(i < firstDayOfWeek && firstDayOfWeek!=8){
             System.out.print("   ");
             i++;
         }
 
-        //以八月為例，daysInMonth=31
-        //for迴圈會印出1~31天，不足兩字元的天數自動補空格靠右
+        //for迴圈會印出1~??天
         for (int day = 1; day <= daysInMonth; day++) {
-            System.out.printf("%2d ", day);
+            System.out.printf("%3d", day);
             
             //當天日期+在每周的第幾天-1，若結果為七的倍數，代表一周七天以打印完，要換行
             if ((day + firstDayOfWeek - 1) % 7 == 0) {

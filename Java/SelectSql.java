@@ -1,6 +1,5 @@
 package com.cathaybk.practice.nt50356.b;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,7 +15,7 @@ public class SelectSql {
 
 	public static final String QUERY_CARS_SQL = "select * from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
 	public static final String INSERT_CARS_SQL = "insert into STUDENT.CARS (MANUFACTURER, TYPE, MIN_PRICE, PRICE) values (?, ?, ?, ?)";
-	public static final String UPDATE_CARS_SQL = "update STUDENT.CARS set NAME = ?, MIN_PRICE = ? where PRICE = ? ";
+	public static final String UPDATE_CARS_SQL = "update STUDENT.CARS set  MIN_PRICE = ? , PRICE = ? where MANUFACTURER = ? and TYPE = ? ";
 	public static final String DELETE_STRING = "delete from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
 
 	public static final String CONN_URL = "jdbc:oracle:thin:@//localhost:1521/XE";
@@ -72,10 +71,9 @@ public class SelectSql {
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < list.size(); i++) {
 
-				sb.append("製造商：").append((list.get(i)).get("MANUFACTURER"))
-				.append("，型號：").append((list.get(i)).get("TYPE"))
-				.append("，售價：$").append((list.get(i)).get("PRICE"))
-				.append("，底價：$").append((list.get(i)).get("MIN_PRICE"));
+				sb.append("製造商：").append((list.get(i)).get("MANUFACTURER")).append("，型號：")
+						.append((list.get(i)).get("TYPE")).append("，售價：$").append((list.get(i)).get("PRICE"))
+						.append("，底價：$").append((list.get(i)).get("MIN_PRICE"));
 
 				System.out.println(sb.toString());
 
@@ -102,11 +100,9 @@ public class SelectSql {
 			StringBuilder sb = new StringBuilder();
 
 			while (rs.next()) {
-				sb.append("製造商： ").append(rs.getString("MANUFACTURER"))
-				.append("，型號：").append(rs.getString("TYPE"))
-				.append("，售價：").append(rs.getString("PRICE"))
-				.append("，底價：").append(rs.getString("MIN_PRICE"))
-				.append("\n");
+				sb.append("製造商： ").append(rs.getString("MANUFACTURER")).append("，型號：").append(rs.getString("TYPE"))
+						.append("，售價：").append(rs.getString("PRICE")).append("，底價：").append(rs.getString("MIN_PRICE"))
+						.append("\n");
 			}
 			System.out.println(sb.toString());
 			sb.setLength(0);
@@ -135,15 +131,14 @@ public class SelectSql {
 				pstmt.setString(4, data2.get("price"));
 
 				pstmt.executeUpdate();
-
 				conn.commit();
 				System.out.println("新增成功");
+				
 			} catch (Exception e) {
 				System.out.println("新增失敗，原因：" + e.getMessage());
 				try {
 					conn.rollback();
 				} catch (SQLException sqle) {
-//                    sqle.printStackTrace();
 					System.out.println("rollback 失敗，原因：" + sqle.getMessage());
 				}
 			}
@@ -158,42 +153,65 @@ public class SelectSql {
 	public static void doUpdate(Scanner scanner) {
 		try (Connection conn = DriverManager.getConnection(CONN_URL, "student", "student123456");
 				PreparedStatement pstmt = conn.prepareStatement(UPDATE_CARS_SQL)) {
+			try {
+				conn.setAutoCommit(false);
+				Map<String, String> data = enterBasicData(scanner);
+				pstmt.setString(1, data.get("manu"));
+				pstmt.setString(2, data.get("type"));
 
-			Map<String, String> data = enterBasicData(scanner);
-			pstmt.setString(1, data.get("manu"));
-			pstmt.setString(2, data.get("type"));
+				Map<String, String> data2 = enterBasicPrice(scanner);
+				pstmt.setString(3, data2.get("minPrice"));
+				pstmt.setString(4, data2.get("price"));
 
-			Map<String, String> data2 = enterBasicPrice(scanner);
-			pstmt.setString(3, data2.get("minPrice"));
-			pstmt.setString(4, data2.get("price"));
-			
-			pstmt.executeUpdate();
-			
+				pstmt.executeUpdate();
+				conn.commit();
+				System.out.println("更新成功");
+					
+				
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("更新失敗，原因：" + e.getMessage());
+				try {
+					conn.rollback();
+				} catch (SQLException sqle) {
+					System.out.println("rollback 失敗，原因：" + sqle.getMessage());
+				}
+			}
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
 		}
 
 		doCommand(scanner);
 	}
 
-	//
+	// 丁、提供 method: delete(製造商,類別);by PK (製造商&類別)
 	public static void doDelete(Scanner scanner) {
 		try (Connection conn = DriverManager.getConnection(CONN_URL, "student", "student123456");
 				PreparedStatement pstmt = conn.prepareStatement(DELETE_STRING)) {
+			try {
+				conn.setAutoCommit(false);
+				Map<String, String> data = enterBasicData(scanner);
 
-			Map<String, String> data = enterBasicData(scanner);
+				pstmt.setString(1, data.get("manu"));
+				pstmt.setString(2, data.get("type"));
 
-			pstmt.setString(1, data.get("manu"));
-			pstmt.setString(2, data.get("type"));
+				pstmt.executeUpdate();							
+				conn.commit();
+				System.out.println("刪除成功");
 
-			pstmt.executeUpdate();
-			System.out.println("刪除成功");
-	
+			} catch (Exception e) {
+				System.out.println("新增失敗，原因：" + e.getMessage());
+				try {
+					conn.rollback();
+				} catch (SQLException sqle) {
+					System.out.println("rollback 失敗，原因：" + sqle.getMessage());
+				}
+			}
 
-		} catch (SQLException e) {
-			System.out.println("未找到符合條件的資料");
-			e.printStackTrace();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+
 		}
 		doCommand(scanner);
 	}

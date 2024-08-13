@@ -23,18 +23,17 @@ public class Cars {
 
 		// 1. 讀取csv檔案資料
 		try (FileReader fileReader = new FileReader(csvFile); BufferedReader reader = new BufferedReader(fileReader)) {
-			// 讀取資料中第一列 -> ﻿Manufacturer,Type,Min.Price,Price
 			String line = reader.readLine();
 			String[] title = line.split(",");
 
 			// 2.每筆資料轉存成一個 Map，並將所有資料放入 List 中
 			while ((line = reader.readLine()) != null) {
-				String[] value = line.split(","); // 將第二列資料開始後的每筆轉成陣列
-				Map<String, String> carMap = new TreeMap<String, String>();// 每次迴圈都先初始化Map
+				String[] value = line.split(","); 
+				Map<String, String> carMap = new HashMap<String, String>();
 				for (int i = 0; i < title.length; i++) {
-					carMap.put(title[i], value[i]); // 將title和map輸入到hashMap中
+					carMap.put(title[i], value[i]); 
 				}
-				carList.add(carMap);// 將hashMap輸入到arrayList中
+				carList.add(carMap);
 				System.out.println(carMap);
 			}
 			;
@@ -59,7 +58,6 @@ public class Cars {
 
 				// 寫入資料
 				for (Map<String, String> carMap : carList) {
-					// {﻿Manufacturer=Audi, Type=Midsize, Min.Price=30.8, Price=37.7}
 					// 創一個新的arrayList來放每筆資料
 					List<String> list = new ArrayList<String>();
 
@@ -70,7 +68,7 @@ public class Cars {
 						// list.add(carMap.get("Min.Price")); -> list = [Audi, Midsize, 30.8]
 						// list.add(carMap.get("Price")); -> list = [Audi, Midsize, 30.8, 37.7]
 					}
-					// 將陣列[Audi, Midsize, 30.8, 37.7]轉為字串，並寫入csv
+					
 					writer.write(String.join(",", list));
 					writer.newLine();
 				}
