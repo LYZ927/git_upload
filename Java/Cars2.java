@@ -15,7 +15,7 @@ public class Cars2 {
 	public static void main(String[] args) {
 		String csvFile = "C:\\Users\\Admin\\Downloads\\Java評量_第6題cars.csv";
 		List<Map<String, String>> carList = new ArrayList<>();
-		//資料讀取，將HashMap整理到carList
+		// 資料讀取，將HashMap整理到carList
 		try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
 
 			String line = reader.readLine();
@@ -41,29 +41,26 @@ public class Cars2 {
 				}
 				groupedByM.get(manufacturer).add(car);
 			}
-			
-			//印出title
+
+			// 印出title
 			StringBuilder str = new StringBuilder();
-			str.append(String.format("%-12s\t", title[0]))
-					.append(String.format("%-10s\t", title[1]))
-					.append(String.format("%10s\t", title[2]))
-					.append(String.format("%10s\t", title[3]));
-			
+			str.append(String.format("%-12s\t", title[0])).append(String.format("%-10s\t", title[1]))
+					.append(String.format("%10s\t", title[2])).append(String.format("%10s\t", title[3]));
+
 			System.out.println(str.toString());
 			str.setLength(0);
-			
-			//累計小計
+
+			// 累計小計
 			BigDecimal sumMinPrice = BigDecimal.ZERO;
 			BigDecimal sumPrice = BigDecimal.ZERO;
-			//累計合計
+			// 累計合計
 			BigDecimal totalMinPrice = BigDecimal.ZERO;
 			BigDecimal totalPrice = BigDecimal.ZERO;
 
-			
 			for (Map.Entry<String, List<Map<String, String>>> entry : groupedByM.entrySet()) {
-				//System.out.println("Manufacturer: " + entry.getKey());
+//				System.out.println("Manufacturer: " + entry.getKey());
 				for (Map<String, String> car : entry.getValue()) {
-					//列印每筆項目
+					// 列印每筆項目
 					str.append(String.format("%-12s\t", car.get("Manufacturer")))
 							.append(String.format("%-10s\t", car.get("Type")))
 							.append(String.format("%10s\t", car.get("Min.Price")))
@@ -74,11 +71,9 @@ public class Cars2 {
 					sumMinPrice = sumMinPrice.add(new BigDecimal((car.get("Min.Price"))));
 					sumPrice = sumPrice.add(new BigDecimal((car.get("Price"))));
 				}
-				//列印小計
-				str.append(String.format("%-12s\t", "小計"))
-				.append(String.format("%-10s\t", ""))
-				.append(String.format("%10s\t", sumMinPrice))
-				.append(String.format("%10s\t", sumPrice));
+				// 列印小計
+				str.append(String.format("%-12s\t", "小計")).append(String.format("%-10s\t", ""))
+						.append(String.format("%10s\t", sumMinPrice)).append(String.format("%10s\t", sumPrice));
 				System.out.println(str.toString());
 				str.setLength(0);
 
@@ -89,14 +84,11 @@ public class Cars2 {
 				sumPrice = BigDecimal.ZERO;
 
 			}
-			//列印合計
-			str.append(String.format("%-12s\t", "合計"))
-			.append(String.format("%-10s\t", ""))
-			.append(String.format("%10s\t", totalMinPrice))
-			.append(String.format("%10s\t", totalPrice));
+			// 列印合計
+			str.append(String.format("%-12s\t", "合計")).append(String.format("%-10s\t", ""))
+					.append(String.format("%10s\t", totalMinPrice)).append(String.format("%10s\t", totalPrice));
 			System.out.println(str.toString());
 			str.setLength(0);
-
 
 		} catch (IOException e) {
 			e.printStackTrace();

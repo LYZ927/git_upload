@@ -133,7 +133,7 @@ public class SelectSql {
 				pstmt.executeUpdate();
 				conn.commit();
 				System.out.println("新增成功");
-				
+
 			} catch (Exception e) {
 				System.out.println("新增失敗，原因：" + e.getMessage());
 				try {
@@ -166,8 +166,6 @@ public class SelectSql {
 				pstmt.executeUpdate();
 				conn.commit();
 				System.out.println("更新成功");
-					
-				
 
 			} catch (Exception e) {
 				System.out.println("更新失敗，原因：" + e.getMessage());
@@ -196,7 +194,7 @@ public class SelectSql {
 				pstmt.setString(1, data.get("manu"));
 				pstmt.setString(2, data.get("type"));
 
-				pstmt.executeUpdate();							
+				pstmt.executeUpdate();
 				conn.commit();
 				System.out.println("刪除成功");
 
