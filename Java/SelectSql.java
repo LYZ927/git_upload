@@ -22,7 +22,10 @@ public class SelectSql {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
+		//列出所有資料
 		displayAllCars(scanner);
+		
+		//輸入指令
 		doCommand(scanner);
 	}
 
@@ -45,6 +48,7 @@ public class SelectSql {
 			break;
 		default:
 			System.out.println("無效的指令");
+			doCommand(scanner);
 			break;
 		}
 		scanner.close();
@@ -98,14 +102,22 @@ public class SelectSql {
 			ResultSet rs = pstmt.executeQuery();
 
 			StringBuilder sb = new StringBuilder();
-
+			
+			boolean check = true;
+			
 			while (rs.next()) {
 				sb.append("製造商： ").append(rs.getString("MANUFACTURER")).append("，型號：").append(rs.getString("TYPE"))
 						.append("，售價：").append(rs.getString("PRICE")).append("，底價：").append(rs.getString("MIN_PRICE"))
 						.append("\n");
+				check=false;
 			}
 			System.out.println(sb.toString());
 			sb.setLength(0);
+			
+			if (check) {
+				System.out.println("查無此資料");
+			}
+			
 
 		} catch (Exception e) {
 			System.out.println("查詢失敗，原因：" + e.getMessage());

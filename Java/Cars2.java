@@ -32,6 +32,7 @@ public class Cars2 {
 			;
 
 			// 使用分組排序(分組依據:manufacturer)
+			// 使用treeMap自然排序
 			Map<String, List<Map<String, String>>> groupedByM = new TreeMap<>();
 
 			for (Map<String, String> car : carList) {

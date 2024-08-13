@@ -15,8 +15,9 @@ public class Calendar {
 		int enterMonth = monthScanner.nextInt();
 
 		while (enterMonth < 1 || enterMonth > 12) {
-			str.append("輸入的月份有誤，請輸入1~12月!").append('\n').append("----------------------").append('\n')
-					.append("輸入介於1~12的整數：");
+			str.append("輸入的月份有誤，請輸入1~12月!").append('\n')
+				.append("----------------------").append('\n')
+				.append("輸入介於1~12的整數：");
 			System.out.println(str.toString());
 			enterMonth = monthScanner.nextInt();
 		}
@@ -43,6 +44,7 @@ public class Calendar {
 
 		// firstDayOfMonth year/month/01
 		LocalDate firstDayOfMonth = currentYearMonth.atDay(1);
+		System.out.println(firstDayOfMonth);
 
 		// daysInMonth每月的天數
 		int daysInMonth = currentYearMonth.lengthOfMonth();
@@ -50,7 +52,7 @@ public class Calendar {
 		// 在每周的第幾天
 		int firstDayOfWeek = firstDayOfMonth.getDayOfWeek().getValue() + 1;
 
-		// 空的天用3個空白字元代替
+		// 空的天數用3個空白字元代替
 		int i = 1;
 		while (i < firstDayOfWeek && firstDayOfWeek != 8) {
 			System.out.print("   ");
