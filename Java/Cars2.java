@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Cars2 {
-
+	//改寫String.format
 	public static void main(String[] args) {
 		String csvFile = "C:\\Users\\Admin\\Downloads\\Java評量_第6題cars.csv";
 		List<Map<String, String>> carList = new ArrayList<>();
@@ -44,6 +44,7 @@ public class Cars2 {
 			}
 
 			// 印出title
+			// str-> sb
 			StringBuilder str = new StringBuilder();
 			str.append(String.format("%-12s\t", title[0])).append(String.format("%-10s\t", title[1]))
 					.append(String.format("%10s\t", title[2])).append(String.format("%10s\t", title[3]));
@@ -59,9 +60,9 @@ public class Cars2 {
 			BigDecimal totalPrice = BigDecimal.ZERO;
 
 			for (Map.Entry<String, List<Map<String, String>>> entry : groupedByM.entrySet()) {
-//				System.out.println("Manufacturer: " + entry.getKey());
 				for (Map<String, String> car : entry.getValue()) {
 					// 列印每筆項目
+					
 					str.append(String.format("%-12s\t", car.get("Manufacturer")))
 							.append(String.format("%-10s\t", car.get("Type")))
 							.append(String.format("%10s\t", car.get("Min.Price")))

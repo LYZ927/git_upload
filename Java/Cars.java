@@ -15,12 +15,13 @@ import java.util.Map;
 public class Cars {
 
 	public static void main(String[] args) {
-
+		//相對路徑
 		String csvFile = "C:\\Users\\Admin\\Downloads\\Java評量_第6題cars.csv";
 		String outputFile = "C:\\Users\\Admin\\Downloads\\cars.csv";
 		List<Map<String, String>> carList = new ArrayList<Map<String, String>>();
 
 		// 1. 讀取csv檔案資料
+		// 2. try catch
 		try (FileReader fileReader = new FileReader(csvFile); BufferedReader reader = new BufferedReader(fileReader)) {
 			String line = reader.readLine();
 			String[] title = line.split(",");
@@ -36,7 +37,7 @@ public class Cars {
 				System.out.println(carMap);
 			}
 			;
-
+			//big decimal
 			// 3.利用 Collections的sort，將Price欄位進行排序(DESC)
 			Collections.sort(carList, new Comparator<Map<String, String>>() {
 				@Override

@@ -5,25 +5,26 @@ import java.time.YearMonth;
 import java.util.Scanner;
 
 public class Calendar {
-
+//try
 	// 輸入1~12月
 	public static void main(String[] args) {
-		Scanner monthScanner = new Scanner(System.in);
-		StringBuilder str = new StringBuilder();
+		try (Scanner monthScanner = new Scanner(System.in);) {
+			StringBuilder str = new StringBuilder();
 
-		System.out.print("輸入介於1~12的整數：");
-		int enterMonth = monthScanner.nextInt();
+			System.out.print("輸入介於1~12的整數：");
+			int enterMonth = monthScanner.nextInt();
 
-		while (enterMonth < 1 || enterMonth > 12) {
-			str.append("輸入的月份有誤，請輸入1~12月!").append('\n')
-				.append("----------------------").append('\n')
-				.append("輸入介於1~12的整數：");
-			System.out.println(str.toString());
-			enterMonth = monthScanner.nextInt();
-		}
+			while (enterMonth < 1 || enterMonth > 12) {
+				str.append("輸入的月份有誤，請輸入1~12月!").append('\n').append("----------------------").append('\n')
+						.append("輸入介於1~12的整數：");
+				System.out.println(str.toString());
+				enterMonth = monthScanner.nextInt();
+			}
 
-		printCalendar(enterMonth);
-		monthScanner.close();
+			printCalendar(enterMonth);
+//			monthScanner.close();
+		} 
+
 	}
 
 	// 執行列印

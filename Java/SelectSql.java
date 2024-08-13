@@ -12,7 +12,10 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class SelectSql {
-
+	// select 寫出四個要的欄位
+	// "select * from STUDENT.CARS"定義
+	// "student", "student123456"
+	// 常數---四個欄位
 	public static final String QUERY_CARS_SQL = "select * from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
 	public static final String INSERT_CARS_SQL = "insert into STUDENT.CARS (MANUFACTURER, TYPE, MIN_PRICE, PRICE) values (?, ?, ?, ?)";
 	public static final String UPDATE_CARS_SQL = "update STUDENT.CARS set  MIN_PRICE = ? , PRICE = ? where MANUFACTURER = ? and TYPE = ? ";
@@ -22,10 +25,10 @@ public class SelectSql {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		//列出所有資料
+		// 列出所有資料
 		displayAllCars(scanner);
-		
-		//輸入指令
+
+		// 輸入指令
 		doCommand(scanner);
 	}
 
@@ -56,12 +59,12 @@ public class SelectSql {
 
 	// 調出所有資料
 	public static void displayAllCars(Scanner scanner) {
+		List<Map<String, String>> list = new ArrayList<>();
+
 		try (Connection conn = DriverManager.getConnection(CONN_URL, "student", "student123456");
 				PreparedStatement pstmt = conn.prepareStatement("select * from STUDENT.CARS");) {
 
 			ResultSet rs = pstmt.executeQuery();
-
-			List<Map<String, String>> list = new ArrayList<>();
 
 			while (rs.next()) {
 				Map<String, String> map = new HashMap<>();
@@ -71,22 +74,22 @@ public class SelectSql {
 				map.put("PRICE", rs.getString("PRICE"));
 				list.add(map);
 			}
-
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < list.size(); i++) {
-
-				sb.append("製造商：").append((list.get(i)).get("MANUFACTURER")).append("，型號：")
-						.append((list.get(i)).get("TYPE")).append("，售價：$").append((list.get(i)).get("PRICE"))
-						.append("，底價：$").append((list.get(i)).get("MIN_PRICE"));
-
-				System.out.println(sb.toString());
-
-				sb.setLength(0);
-			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+
+			sb.append("製造商：").append((list.get(i)).get("MANUFACTURER")).append("，型號：").append((list.get(i)).get("TYPE"))
+					.append("，售價：$").append((list.get(i)).get("PRICE")).append("，底價：$")
+					.append((list.get(i)).get("MIN_PRICE"));
+
+			System.out.println(sb.toString());
+
+			sb.setLength(0);
+		}
+
 		doCommand(scanner);
 	}
 
@@ -102,22 +105,21 @@ public class SelectSql {
 			ResultSet rs = pstmt.executeQuery();
 
 			StringBuilder sb = new StringBuilder();
-			
+
 			boolean check = true;
-			
+
 			while (rs.next()) {
 				sb.append("製造商： ").append(rs.getString("MANUFACTURER")).append("，型號：").append(rs.getString("TYPE"))
 						.append("，售價：").append(rs.getString("PRICE")).append("，底價：").append(rs.getString("MIN_PRICE"))
 						.append("\n");
-				check=false;
+				check = false;
 			}
 			System.out.println(sb.toString());
 			sb.setLength(0);
-			
+
 			if (check) {
 				System.out.println("查無此資料");
 			}
-			
 
 		} catch (Exception e) {
 			System.out.println("查詢失敗，原因：" + e.getMessage());
@@ -177,7 +179,14 @@ public class SelectSql {
 
 				pstmt.executeUpdate();
 				conn.commit();
-				System.out.println("更新成功");
+				// update
+				int i = pstmt.executeUpdate();
+				if (i == 0) {
+					System.out.println("更新失敗");
+				} else {
+					System.out.println("更新成功");
+
+				}
 
 			} catch (Exception e) {
 				System.out.println("更新失敗，原因：" + e.getMessage());
