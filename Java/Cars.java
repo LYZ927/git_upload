@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,13 +17,16 @@ import java.util.Map;
 public class Cars {
 
 	public static void main(String[] args) throws IOException {
-
-		String csvFile = "C:\\Users\\Admin\\Downloads\\Java評量_第6題cars.csv";
-		String outputFile = "C:\\Users\\Admin\\Downloads\\cars.csv";
+		
+		//桌面存放的cars.csv路徑
+		String userHome = System.getProperty("user.home");
+		String csvFilePath = Paths.get(userHome, "Desktop", "Java評量_第6題cars.csv").toString();
+		String outputPath = Paths.get(userHome, "Desktop", "cars2.csv").toString();
+		
 		List<Map<String, String>> carList = new ArrayList<Map<String, String>>();
 		String[] title = null;
 		// 1. 讀取csv檔案資料
-		try (FileReader fileReader = new FileReader(csvFile); BufferedReader reader = new BufferedReader(fileReader)) {
+		try (FileReader fileReader = new FileReader(csvFilePath); BufferedReader reader = new BufferedReader(fileReader)) {
 			String line = reader.readLine();
 			title = line.split(",");
 
@@ -52,7 +56,7 @@ public class Cars {
 		}
 		
 		// 3.輸出成另一份檔案cars2.csv
-		try (FileWriter fileWriter = new FileWriter(outputFile);
+		try (FileWriter fileWriter = new FileWriter(outputPath);
 				BufferedWriter writer = new BufferedWriter(fileWriter)) {
 			writer.write(String.join(",", title));
 			writer.newLine();

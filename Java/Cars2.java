@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +13,13 @@ import java.util.TreeMap;
 
 public class Cars2 {
 	public static void main(String[] args) {
-		String csvFile = "C:\\Users\\Admin\\Downloads\\Java評量_第6題cars.csv";
+		//桌面存放的cars.csv路徑
+		String userHome = System.getProperty("user.home");
+		String csvFilePath = Paths.get(userHome, "Desktop", "Java評量_第6題cars.csv").toString();
 		List<Map<String, String>> carList = new ArrayList<>();
 		String[] title = null;
 		// 資料讀取，將HashMap整理到carList
-		try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
 
 			String line = reader.readLine();
 			title = line.split(",");

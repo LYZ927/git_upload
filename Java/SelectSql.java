@@ -12,24 +12,24 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class SelectSql {
-	//SQL指令
+	// SQL指令
+	public static final String QUERY_ALLCARS_SQL ="select MANUFACTURER, TYPE, MIN_PRICE, PRICE from STUDENT.CARS";
 	public static final String QUERY_CARS_SQL = "select MANUFACTURER, TYPE, MIN_PRICE, PRICE from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
 	public static final String INSERT_CARS_SQL = "insert into STUDENT.CARS (MANUFACTURER, TYPE, MIN_PRICE, PRICE) values (?, ?, ?, ?)";
 	public static final String UPDATE_CARS_SQL = "update STUDENT.CARS set  MIN_PRICE = ? , PRICE = ? where MANUFACTURER = ? and TYPE = ? ";
 	public static final String DELETE_STRING = "delete from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
-	
-	//連線資訊
+
+	// 連線資訊
 	public static final String CONN_URL = "jdbc:oracle:thin:@//localhost:1521/XE";
 	public static final String ACCOUNT = "student";
 	public static final String PASSWORD = "student123456";
 
-	//四個主要欄位
+	// 四個主要欄位
 	public static final String MANUFACTURER = "MANUFACTURER";
 	public static final String TYPE = "TYPE";
 	public static final String PRICE = "PRICE";
 	public static final String MIN_PRICE = "MIN_PRICE";
-	
-	
+
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		// 列出所有資料
@@ -69,7 +69,8 @@ public class SelectSql {
 		List<Map<String, String>> list = new ArrayList<>();
 
 		try (Connection conn = DriverManager.getConnection(CONN_URL, ACCOUNT, PASSWORD);
-				PreparedStatement pstmt = conn.prepareStatement(QUERY_CARS_SQL);) {
+				PreparedStatement pstmt = conn
+						.prepareStatement(QUERY_ALLCARS_SQL)) {
 
 			ResultSet rs = pstmt.executeQuery();
 
@@ -177,17 +178,18 @@ public class SelectSql {
 			try {
 				conn.setAutoCommit(false);
 				Map<String, String> data = enterBasicData(scanner);
-				pstmt.setString(1, data.get("manu"));
-				pstmt.setString(2, data.get("type"));
-
 				Map<String, String> data2 = enterBasicPrice(scanner);
-				pstmt.setString(3, data2.get("minPrice"));
-				pstmt.setString(4, data2.get("price"));
 
-				pstmt.executeUpdate();
-				conn.commit();
-				// 判斷是否更新成功
+				pstmt.setString(1, data2.get("minPrice"));
+				pstmt.setString(2, data2.get("price"));
+				pstmt.setString(3, data.get("manu"));
+				pstmt.setString(4, data.get("type"));
+
 				int i = pstmt.executeUpdate();
+
+				conn.commit();
+
+				// 判斷是否更新成功
 				if (i == 0) {
 					System.out.println("更新失敗");
 				} else {
@@ -222,9 +224,14 @@ public class SelectSql {
 				pstmt.setString(1, data.get("manu"));
 				pstmt.setString(2, data.get("type"));
 
-				pstmt.executeUpdate();
+				int i = pstmt.executeUpdate();
 				conn.commit();
-				System.out.println("刪除成功");
+
+				if (i == 0) {
+					System.out.println("刪除失敗");
+				} else {
+					System.out.println("刪除成功");
+				}
 
 			} catch (Exception e) {
 				System.out.println("新增失敗，原因：" + e.getMessage());
