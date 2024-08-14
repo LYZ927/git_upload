@@ -2,23 +2,20 @@ package com.cathaybk.practice.nt50356.b;
 
 public class NineNineTable {
 
-	static int countDigit(int x) {
-		return (int) Math.floor(Math.log10(x) + 1);
-	}
-
 	// multiplier乘數 multi被乘數
 	public static void main(String[] args) {
+		StringBuilder sb = new StringBuilder();
 		for (int multiplier = 1; multiplier <= 9; multiplier++) {
 			for (int multi = 2; multi <= 9; multi++) {
 				int result = multi * multiplier;
-				if (countDigit(result) == 2) {
-					System.out.printf(multi + "*" + multiplier + "=" + result + "\t");
+				if (result > 9) {
+					sb.append(multi).append('*').append(multiplier).append('=').append(result).append('\t');
 				} else {
-					System.out.print(multi + "*" + multiplier + "= " + result + "\t");
+					sb.append(multi).append('*').append(multiplier).append("= ").append(result).append('\t');
 				}
 			}
-			System.out.println();
-
+			System.out.println(sb.toString());
+			sb.setLength(0);
 		}
 
 	}

@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,67 +15,60 @@ import java.util.Map;
 
 public class Cars {
 
-	public static void main(String[] args) {
-		//相對路徑
+	public static void main(String[] args) throws IOException {
+
 		String csvFile = "C:\\Users\\Admin\\Downloads\\Java評量_第6題cars.csv";
 		String outputFile = "C:\\Users\\Admin\\Downloads\\cars.csv";
 		List<Map<String, String>> carList = new ArrayList<Map<String, String>>();
-
+		String[] title = null;
 		// 1. 讀取csv檔案資料
-		// 2. try catch
 		try (FileReader fileReader = new FileReader(csvFile); BufferedReader reader = new BufferedReader(fileReader)) {
 			String line = reader.readLine();
-			String[] title = line.split(",");
+			title = line.split(",");
 
-			// 2.每筆資料轉存成一個 Map，並將所有資料放入 List 中
 			while ((line = reader.readLine()) != null) {
-				String[] value = line.split(","); 
+				String[] value = line.split(",");
 				Map<String, String> carMap = new HashMap<String, String>();
 				for (int i = 0; i < title.length; i++) {
-					carMap.put(title[i], value[i]); 
+					carMap.put(title[i], value[i]);
 				}
 				carList.add(carMap);
-				System.out.println(carMap);
-			}
-			;
-			//big decimal
-			// 3.利用 Collections的sort，將Price欄位進行排序(DESC)
+			};
+			// 2.利用 Collections的sort，將Price欄位進行排序(DESC)		
 			Collections.sort(carList, new Comparator<Map<String, String>>() {
-				@Override
-				public int compare(Map<String, String> car1, Map<String, String> car2) {
-					double price1 = Double.parseDouble(car1.get("Price"));
-					double price2 = Double.parseDouble(car2.get("Price"));
-					return Double.compare(price2, price1);
-				};
+			    @Override
+			    public int compare(Map<String, String> car1, Map<String, String> car2) {
+			        BigDecimal price1 = new BigDecimal(car1.get("Price"));
+			        BigDecimal price2 = new BigDecimal(car2.get("Price"));
+			        return price2.compareTo(price1); 
+			    }
 			});
-
-			
-//			4.輸出成另一份檔案cars2.csv 
-			try (FileWriter fileWriter = new FileWriter(outputFile);
-					BufferedWriter writer = new BufferedWriter(fileWriter)) {
-				// 寫入標題
-				writer.write(String.join(",", title));
-				writer.newLine();
-
-				// 寫入資料
-				for (Map<String, String> carMap : carList) {
-					// 創一個新的arrayList來放每筆資料
-					List<String> list = new ArrayList<String>();
-
-					for (String key : title) {
-						list.add(carMap.get(key));
-						// list.add(carMap.get("Manufacturer")); -> list = [Audi]
-						// list.add(carMap.get("Type")); -> list = [Audi, Midsize]
-						// list.add(carMap.get("Min.Price")); -> list = [Audi, Midsize, 30.8]
-						// list.add(carMap.get("Price")); -> list = [Audi, Midsize, 30.8, 37.7]
-					}
-					
-					writer.write(String.join(",", list));
-					writer.newLine();
-				}
+			for (Map<String, String> car : carList) {
+				System.out.println(car);
 			}
 
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// 3.輸出成另一份檔案cars2.csv
+		try (FileWriter fileWriter = new FileWriter(outputFile);
+				BufferedWriter writer = new BufferedWriter(fileWriter)) {
+			writer.write(String.join(",", title));
+			writer.newLine();
+
+			// 寫入資料
+			for (Map<String, String> carMap : carList) {
+				List<String> list = new ArrayList<String>();
+
+				for (String key : title) {
+					list.add(carMap.get(key));
+				}
+
+				writer.write(String.join(",", list));
+				writer.newLine();
+			}
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

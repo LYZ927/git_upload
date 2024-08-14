@@ -9,8 +9,8 @@ public class Sales extends Employee {
 		return bouns;
 	}
 
-	public void setBouns(int bouns) {
-		this.bouns = bouns;
+	public void setBouns(int sale) {
+		this.bouns = (int) (sale * 0.05);
 	}
 
 	public int getPayment() {
@@ -21,18 +21,19 @@ public class Sales extends Employee {
 		this.payment = payment;
 	}
 
-	public Sales(String name, String department, int salary, int bouns) {
+	public Sales(String name, String department, int salary, int sale) {
 		super(name, department, salary);
-		setBouns(bouns *= 0.05);
+		setBouns(sale);
 	}
 
 	@Override
 	public void printInfo() {
 		setPayment(getSalary() + bouns);
 		super.printInfo();
-		System.out.println("月薪： " + getSalary());
-		System.out.println("業績獎金： " + getBouns());
-		System.out.println("總計： " + getPayment());
+		StringBuilder sb = new StringBuilder();
+		sb.append("業績獎金： ").append(getBouns()).append('\n').append("總計： ").append(getPayment());
+		System.out.println(sb.toString());
+		sb.setLength(0);
 
 	}
 }

@@ -38,9 +38,11 @@ public class Employee implements IWork {
 
 	@Override
 	public void printInfo() {
-		System.out.println("薪資單");
-		System.out.println("姓名：　" + name + " 工作部門： " + department);
-
+		StringBuilder sb = new StringBuilder();
+		sb.append("薪資單").append('\n').append("姓名：　").append(name).append(" 工作部門： ").append(department).append('\n')
+				.append("月薪：").append(salary);
+		System.out.println(sb.toString());
+		sb.setLength(0);
 	}
 
 }

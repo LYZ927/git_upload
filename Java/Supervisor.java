@@ -20,7 +20,6 @@ public class Supervisor extends Employee {
 	public void printInfo() {
 		setPayment(getSalary());
 		super.printInfo();
-		System.out.println("月薪： " + getSalary());
 		System.out.println("總計： " + getPayment());
 
 	}

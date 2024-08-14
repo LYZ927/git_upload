@@ -19,24 +19,22 @@ public class HRMain {
 			employee.printInfo();
 		}
 
-		try {
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\Admin\\output.csv");
-			OutputStreamWriter writer = new OutputStreamWriter(fos, "UTF-8");
-			BufferedWriter bufferedWriter = new BufferedWriter(writer);
+		try (FileOutputStream fos = new FileOutputStream("C:\\Users\\Admin\\output.csv");
+				OutputStreamWriter writer = new OutputStreamWriter(fos, "UTF-8");
+				BufferedWriter bufferedWriter = new BufferedWriter(writer);) {
 
 			bufferedWriter.write("\uFEFF");
 
-			for (Employee eachList : employeeList) {
-				if (eachList instanceof Sales) {
+			for (Employee employee : employeeList) {
+				if (employee instanceof Sales) {
 					// 向下轉型，才能使用子類別的方法
-					Sales sales = (Sales) eachList;
-					bufferedWriter.write(sales.getName() + "，" + sales.getPayment() + "\n");
+					Sales sales = (Sales) employee;
+					bufferedWriter.write(sales.getName() + "," + sales.getPayment() + "\n");
 				} else {
-					Supervisor supervisor = (Supervisor) eachList;
-					bufferedWriter.write(supervisor.getName() + "，" + supervisor.getPayment() + "\n");
+					Supervisor supervisor = (Supervisor) employee;
+					bufferedWriter.write(supervisor.getName() + "," + supervisor.getPayment() + "\n");
 				}
 			}
-			bufferedWriter.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
