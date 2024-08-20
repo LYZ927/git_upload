@@ -44,21 +44,23 @@
             putBtn.addEventListener('click', (e) => {
                 const key = document.querySelector('#key').value;
                 const value = document.querySelector('#value').value;
-                //防呆
-                if (key === '' || value === '') {
+                //防呆.trim()
+                //判斷誰沒填寫
+                if (!key.trim() || !value.trim()) {
                     alert('請確實輸入資料!');
-                    return
+                    return;
                 }
+                //.trim()
                 if(map.contains(key)){
                     alert('請勿輸入重複的key!');
-                    return
+                    return;
                 }
                 
                 map.put(key, value)
 
                 //畫面渲染
-                mapStr += `${key}：${map.get(key)}<br>`
-                text.innerHTML = mapStr;
+                
+                text.innerHTML += `${key}：${map.get(key)}<br>`;
                 alert('新增成功!')
             });
             //刪除事件
