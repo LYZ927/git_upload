@@ -15,16 +15,16 @@
             border-collapse: collapse;
         }
 
-        label {
-            display: inline;
-            padding: 10px;
-        }
-
         tr,
         td {
             border: 1px solid gray;
             padding: 10px;
             text-align: left;
+        }
+
+        label {
+            display: inline;
+            padding: 10px;
         }
 
         .rowFlex {
@@ -67,6 +67,7 @@
                 productObj.minPrice = minPrice.value;
                 productObj.price = price.value;
                 list.push(productObj);
+                alert('新增成功!')
                 renderData();
             });
 
@@ -77,7 +78,7 @@
                     alert('請輸入製造商和類別!');
                     return
                 };
-                               
+
                 //檢查是否有資料
                 if (!samecheck(list, manu.value, category.value)) {
                     alert('查無此筆資料!');
@@ -90,10 +91,9 @@
                         item.minPrice = minPrice.value;
                         item.price = price.value;
                     }
-                    alert('修改成功!')
-                    renderData();
                 })
-
+                alert('修改成功!')
+                renderData();
             });
             //清除按鈕
             clearBtn.addEventListener('click', (e) => {
@@ -101,7 +101,6 @@
                 text.innerHTML = '';
                 clearValue();
             });
-
 
             //下方畫面監聽
             text.addEventListener('click', (e) => {
@@ -112,7 +111,7 @@
                     renderData();
                 }
                 //點到的是單選
-                if (e.target.getAttribute('class') === 'radio') {
+                if (e.target.getAttribute('type') === 'radio') {
                     let num = e.target.getAttribute('data-num');
                     manu.value = list[num].maunfacturer;
                     category.value = list[num].category;
@@ -121,13 +120,12 @@
                 }
             })
 
-
             //資料渲染
             function renderData() {
                 let str = '';
                 list.forEach((item, index) => {
                     str += `<tr>
-                        <td><input type='radio' class='radio' data-num=${index}></td>
+                        <td><input type='radio' data-num=${index}></td>
                         <td>${index + 1}</td>
                         <td>${item.maunfacturer}</td>
                         <td>${item.category}</td>
@@ -139,7 +137,7 @@
                 text.innerHTML = str;
                 clearValue();
             }
-            
+
             //檢查list中是否有資料
             function samecheck(list, manu, category) {
                 return list.some((item) => {
@@ -153,7 +151,7 @@
                 category.value = '';
                 minPrice.value = '';
                 price.value = '';
-            }           
+            }
         }
 
     </script>
