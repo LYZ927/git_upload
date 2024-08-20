@@ -40,11 +40,9 @@
             const category = document.querySelector('#category');
             const minPrice = document.querySelector('#minPrice');
             const price = document.querySelector('#price');
-
             const addBtn = document.querySelector('#add');
             const editBtn = document.querySelector('#edit');
             const clearBtn = document.querySelector('#clear');
-
             const text = document.querySelector('#text');
             let list = [];
 
@@ -88,8 +86,9 @@
                         item.minPrice = minPrice.value;
                         item.price = price.value;
                     }
-                    renderData();
                     alert('修改成功!')
+                    renderData();
+                    
                 })
 
             });
@@ -137,8 +136,6 @@
                 text.innerHTML = str;
                 clearValue();
             }
-
-
 
             //清空輸入框的值
             function clearValue() {

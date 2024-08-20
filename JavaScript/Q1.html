@@ -80,19 +80,17 @@
                     alert('請確實輸入資料!');
                     return
                 }
-                
-                if (!map.contains(key)) {
-                    map.put(key, value)
-                } else {
+                if(map.contains(key)){
                     alert('請勿輸入重複的key!');
                     return
                 }
+                
+                map.put(key, value)
 
-                //新增資料
-                map.put(key, value);
                 //畫面渲染
                 mapStr += `${key}：${map.get(key)}<br>`
                 text.innerHTML = mapStr;
+                alert('新增成功!')
 
             });
             //刪除事件
@@ -102,7 +100,8 @@
                 //清空畫面
                 document.querySelector('#key').value = '';
                 document.querySelector('#value').value = '';
-                text.innerHTML = '';                         
+                text.innerHTML = '';
+                alert('刪除成功!')                         
             });
 
         }
