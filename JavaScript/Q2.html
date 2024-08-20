@@ -9,24 +9,20 @@
         * {
             box-sizing: border-box;
         }
-
         table {
             border: 1px solid gray;
             border-collapse: collapse;
         }
-
         tr,
         td {
             border: 1px solid gray;
             padding: 10px;
             text-align: left;
         }
-
         label {
             display: inline;
             padding: 10px;
         }
-
         .rowFlex {
             padding: 10px;
             text-align: center;
@@ -70,7 +66,6 @@
                 alert('新增成功!')
                 renderData();
             });
-
             //修改按鈕
             editBtn.addEventListener('click', (e) => {
                 //是否輸入製造商和類別
@@ -110,7 +105,7 @@
                     list.splice(num, 1);
                     renderData();
                 }
-                //點到的是單選
+                //點到的是單選按鈕
                 if (e.target.getAttribute('type') === 'radio') {
                     let num = e.target.getAttribute('data-num');
                     manu.value = list[num].maunfacturer;
@@ -164,16 +159,16 @@
         <table>
             <tr>
                 <th> <label for="manu">製造商</label></th>
-                <td> <input type="text" id="manu"></td>
+                <td> <input type="text" id="manu" name="manu"></td>
                 <th><label for="category">類別</label></th>
-                <td> <input type="text" id="category"></td>
+                <td> <input type="text" id="category" name="category"></td>
             </tr>
 
             <tr>
                 <th><label for="minPrice">底價</label></th>
-                <td><input type="text" id="minPrice"></td>
+                <td><input type="text" id="minPrice" name="minPrice"></td>
                 <th><label for="price">售價</label></th>
-                <td><input type="text" id="price"></td>
+                <td><input type="text" id="price" name="price"></td>
             </tr>
             <tr>
                 <td colspan="4" class="rowFlex">
