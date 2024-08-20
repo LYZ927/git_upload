@@ -48,19 +48,16 @@
 
             //新增按鈕
             addBtn.addEventListener('click', (e) => {
-                //檢查製造商和類別
+                //是否輸入製造商和類別
                 if (!manu.value || !category.value) {
                     alert('請輸入製造商和類別!');
                     return;
                 }
 
                 //檢查是否重複新增
-                const samecheck = list.some((item) => {
-                    return manu.value === item.maunfacturer && category.value === item.category
-                })
-                if (samecheck) {
+                if (samecheck(list, manu.value, category.value)) {
                     alert('請勿輸入相同品項');
-                    return
+                    return;
                 }
 
                 //將資料寫入
@@ -75,11 +72,18 @@
 
             //修改按鈕
             editBtn.addEventListener('click', (e) => {
-                //檢查製造商和類別
+                //是否輸入製造商和類別
                 if (!manu.value || !category.value) {
                     alert('請輸入製造商和類別!');
                     return
                 };
+                               
+                //檢查是否有資料
+                if (!samecheck(list, manu.value, category.value)) {
+                    alert('查無此筆資料!');
+                    return;
+                }
+
                 //list[]資料修改
                 list.forEach((item, index) => {
                     if (item.maunfacturer === manu.value && item.category === category.value) {
@@ -88,7 +92,6 @@
                     }
                     alert('修改成功!')
                     renderData();
-                    
                 })
 
             });
@@ -136,6 +139,13 @@
                 text.innerHTML = str;
                 clearValue();
             }
+            
+            //檢查list中是否有資料
+            function samecheck(list, manu, category) {
+                return list.some((item) => {
+                    return manu === item.maunfacturer && category === item.category;
+                });
+            }
 
             //清空輸入框的值
             function clearValue() {
@@ -143,8 +153,7 @@
                 category.value = '';
                 minPrice.value = '';
                 price.value = '';
-            }
-
+            }           
         }
 
     </script>
