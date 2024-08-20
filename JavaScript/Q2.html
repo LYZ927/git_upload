@@ -45,10 +45,12 @@
             //新增按鈕
             addBtn.addEventListener('click', (e) => {
                 //是否輸入製造商和類別
+                //*分開檢核, trim()
                 if (!manu.value || !category.value) {
                     alert('請輸入製造商和類別!');
                     return;
                 }
+                //數字檢核or input(type-number)
 
                 //檢查是否重複新增
                 if (samecheck(list, manu.value, category.value)) {
@@ -69,12 +71,13 @@
             //修改按鈕
             editBtn.addEventListener('click', (e) => {
                 //是否輸入製造商和類別
+                //分開判斷 數字型態
                 if (!manu.value || !category.value) {
                     alert('請輸入製造商和類別!');
                     return
                 };
 
-                //檢查是否有資料
+                //檢查是否有資料 (radio button)
                 if (!samecheck(list, manu.value, category.value)) {
                     alert('查無此筆資料!');
                     return;
@@ -82,7 +85,9 @@
 
                 //list[]資料修改
                 list.forEach((item, index) => {
+                    // 是否點radio btn
                     if (item.maunfacturer === manu.value && item.category === category.value) {
+                        //修改包含manu category
                         item.minPrice = minPrice.value;
                         item.price = price.value;
                     }
@@ -101,6 +106,7 @@
             text.addEventListener('click', (e) => {
                 //點到的是刪除按鈕
                 if (e.target.getAttribute('class') === 'delete') {
+                    //不用變數
                     let num = e.target.getAttribute('data-num');
                     list.splice(num, 1);
                     renderData();
@@ -118,6 +124,10 @@
             //資料渲染
             function renderData() {
                 let str = '';
+                //document.createElemnt
+                //appendChild
+
+                //name屬性 radio 
                 list.forEach((item, index) => {
                     str += `<tr>
                         <td><input type='radio' data-num=${index}></td>

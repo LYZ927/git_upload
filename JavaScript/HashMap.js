@@ -1,29 +1,24 @@
 var HashMap = function () {
-    let obj = {};
 
+    let map = {};
     return {
-        put: function (a, b) {
-            obj[a] = b;
+        put: function (key, value) {
+            map[key] = value;
         },
+
         keys: function () {
-            let i = [];
-            for (let key in obj) {
-                i.push(key)
-            }
-            return i;
+            //object.key改寫
+            return Object.keys(obj);
         },
-        contains: function (a) {
-            if (obj[a]) {
-                return true
-            } else {
-                return false
-            }
+        contains: function (key) {
+            //array.includes(key)改寫
+            return Object.keys(obj).contains(key);
         },
-        get: function (a) {
-            return obj[a];
+        get: function (key) {
+            return map[key];
         },
         clear: function () {
-            return obj={};
+            return map = {};
         }
     };
 };
