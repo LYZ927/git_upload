@@ -35,7 +35,6 @@
     </style>
     <script>
         window.onload = function () {
-
             //DOM
             const putBtn = document.querySelector('#put');
             const delBtn = document.querySelector('#clear');
@@ -81,6 +80,7 @@
                     alert('請確實輸入資料!');
                     return
                 }
+                
                 if (!map.contains(key)) {
                     map.put(key, value)
                 } else {

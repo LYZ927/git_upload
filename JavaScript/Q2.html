@@ -10,13 +10,12 @@
             box-sizing: border-box;
         }
 
-
         table {
             border: 1px solid gray;
             border-collapse: collapse;
         }
 
-        label{
+        label {
             display: inline;
             padding: 10px;
         }
@@ -27,14 +26,14 @@
             padding: 10px;
             text-align: left;
         }
-        .rowFlex{
+
+        .rowFlex {
             padding: 10px;
             text-align: center;
         }
     </style>
 
     <script>
-
         window.onload = function () {
             //DOM綁定
             const manu = document.querySelector('#manu');
@@ -51,28 +50,39 @@
 
             //新增按鈕
             addBtn.addEventListener('click', (e) => {
+                //檢查製造商和類別
                 if (!manu.value || !category.value) {
                     alert('請輸入製造商和類別!');
                     return;
-                };
+                }
 
+                //檢查是否重複新增
+                const samecheck = list.some((item) => {
+                    return manu.value === item.maunfacturer && category.value === item.category
+                })
+                if (samecheck) {
+                    alert('請勿輸入相同品項');
+                    return
+                }
+
+                //將資料寫入
                 let productObj = {};
-                    productObj.maunfacturer = manu.value;
-                    productObj.category = category.value;
-                    productObj.minPrice = minPrice.value;
-                    productObj.price = price.value;
-                    list.push(productObj);
-                    renderData();
-
+                productObj.maunfacturer = manu.value;
+                productObj.category = category.value;
+                productObj.minPrice = minPrice.value;
+                productObj.price = price.value;
+                list.push(productObj);
+                renderData();
             });
+
             //修改按鈕
             editBtn.addEventListener('click', (e) => {
-
+                //檢查製造商和類別
                 if (!manu.value || !category.value) {
                     alert('請輸入製造商和類別!');
                     return
                 };
-
+                //list[]資料修改
                 list.forEach((item, index) => {
                     if (item.maunfacturer === manu.value && item.category === category.value) {
                         item.minPrice = minPrice.value;
@@ -99,7 +109,7 @@
                     list.splice(num, 1);
                     renderData();
                 }
-                 //點到的是單選
+                //點到的是單選
                 if (e.target.getAttribute('class') === 'radio') {
                     let num = e.target.getAttribute('data-num');
                     manu.value = list[num].maunfacturer;
@@ -128,7 +138,7 @@
                 clearValue();
             }
 
-            
+
 
             //清空輸入框的值
             function clearValue() {
@@ -137,6 +147,7 @@
                 minPrice.value = '';
                 price.value = '';
             }
+
         }
 
     </script>
@@ -148,7 +159,7 @@
     <div>
         <table>
             <tr>
-                <th> <label for="manufacturer">製造商</label></th>
+                <th> <label for="manu">製造商</label></th>
                 <td> <input type="text" id="manu"></td>
                 <th><label for="category">類別</label></th>
                 <td> <input type="text" id="category"></td>
@@ -176,7 +187,7 @@
     <div>
         <table border="1">
             <thead>
-                <tr >
+                <tr>
                     <th class="rowFlex"></th>
                     <th class="rowFlex">序號</th>
                     <th class="rowFlex">製造商</th>
