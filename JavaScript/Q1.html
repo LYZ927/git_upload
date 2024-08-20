@@ -30,6 +30,7 @@
             border-bottom: 1px solid gray;
         }
     </style>
+    <script type="text/javascript" src="./HashMap.js"></script>
     <script>
         window.onload = function () {
             //DOM
@@ -38,34 +39,6 @@
             const text = document.querySelector('#text');
             let mapStr = '';
             //模仿Java HashMap
-            const HashMap = function () {
-                let obj = {};
-                return {
-                    put: function (a, b) {
-                        obj[a] = b;
-                    },
-                    keys: function () {
-                        let i = [];
-                        for (let key in obj) {
-                            i.push(key)
-                        }
-                        return i;
-                    },
-                    contains: function (a) {
-                        if (obj[a]) {
-                            return true
-                        } else {
-                            return false
-                        }
-                    },
-                    get: function (a) {
-                        return obj[a];
-                    },
-                    clear: function () {
-                        return obj = {};
-                    }
-                };
-            };
             const map = new HashMap();
 
             //新增事件
