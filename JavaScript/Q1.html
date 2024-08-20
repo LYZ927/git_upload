@@ -40,7 +40,6 @@
             let mapStr = '';
             //模仿Java HashMap
             const map = new HashMap();
-
             //新增事件
             putBtn.addEventListener('click', (e) => {
                 const key = document.querySelector('#key').value;
@@ -65,14 +64,14 @@
             //刪除事件
             delBtn.addEventListener('click', (e) => {
                 //資料清空
-                map.clear;
+                map.clear();
                 //清空畫面
                 document.querySelector('#key').value = '';
                 document.querySelector('#value').value = '';
+                mapStr='';
                 text.innerHTML = '';
                 alert('刪除成功!')                         
             });
-
         }
     </script>
 </head>
