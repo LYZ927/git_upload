@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>操作DOM物件–table</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+
+        table {
+            border: 1px solid gray;
+            border-collapse: collapse;
+        }
+
+        label{
+            display: inline;
+            padding: 10px;
+        }
+
+        tr,
+        td {
+            border: 1px solid gray;
+            padding: 10px;
+            text-align: left;
+        }
+        .rowFlex{
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+
+        window.onload = function () {
+            //DOM綁定
+            const manu = document.querySelector('#manu');
+            const category = document.querySelector('#category');
+            const minPrice = document.querySelector('#minPrice');
+            const price = document.querySelector('#price');
+
+            const addBtn = document.querySelector('#add');
+            const editBtn = document.querySelector('#edit');
+            const clearBtn = document.querySelector('#clear');
+
+            const text = document.querySelector('#text');
+            let list = [];
+
+            //新增按鈕
+            addBtn.addEventListener('click', (e) => {
+                if (!manu.value || !category.value) {
+                    alert('請輸入製造商和類別!');
+                    return;
+                };
+
+                let productObj = {};
+                    productObj.maunfacturer = manu.value;
+                    productObj.category = category.value;
+                    productObj.minPrice = minPrice.value;
+                    productObj.price = price.value;
+                    list.push(productObj);
+                    renderData();
+
+            });
+            //修改按鈕
+            editBtn.addEventListener('click', (e) => {
+
+                if (!manu.value || !category.value) {
+                    alert('請輸入製造商和類別!');
+                    return
+                };
+
+                list.forEach((item, index) => {
+                    if (item.maunfacturer === manu.value && item.category === category.value) {
+                        item.minPrice = minPrice.value;
+                        item.price = price.value;
+                    }
+                    renderData();
+                    alert('修改成功!')
+                })
+
+            });
+            //清除按鈕
+            clearBtn.addEventListener('click', (e) => {
+                list = [];
+                text.innerHTML = '';
+                clearValue();
+            });
+
+
+            //下方畫面監聽
+            text.addEventListener('click', (e) => {
+                //點到的是刪除按鈕
+                if (e.target.getAttribute('class') === 'delete') {
+                    let num = e.target.getAttribute('data-num');
+                    list.splice(num, 1);
+                    renderData();
+                }
+                 //點到的是單選
+                if (e.target.getAttribute('class') === 'radio') {
+                    let num = e.target.getAttribute('data-num');
+                    manu.value = list[num].maunfacturer;
+                    category.value = list[num].category;
+                    minPrice.value = list[num].minPrice;
+                    price.value = list[num].price;
+                }
+            })
+
+
+            //資料渲染
+            function renderData() {
+                let str = '';
+                list.forEach((item, index) => {
+                    str += `<tr>
+                        <td><input type='radio' class='radio' data-num=${index}></td>
+                        <td>${index + 1}</td>
+                        <td>${item.maunfacturer}</td>
+                        <td>${item.category}</td>
+                        <td>${item.minPrice}</td>
+                        <td>${item.price}</td>
+                        <td><button type='button' class='delete' data-num=${index}>刪除</button></td>
+                        </tr>`;
+                });
+                text.innerHTML = str;
+                clearValue();
+            }
+
+            
+
+            //清空輸入框的值
+            function clearValue() {
+                manu.value = '';
+                category.value = '';
+                minPrice.value = '';
+                price.value = '';
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <!-- 資料輸入 -->
+
+    <div>
+        <table>
+            <tr>
+                <th> <label for="manufacturer">製造商</label></th>
+                <td> <input type="text" id="manu"></td>
+                <th><label for="category">類別</label></th>
+                <td> <input type="text" id="category"></td>
+            </tr>
+
+            <tr>
+                <th><label for="minPrice">底價</label></th>
+                <td><input type="text" id="minPrice"></td>
+                <th><label for="price">售價</label></th>
+                <td><input type="text" id="price"></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="rowFlex">
+                    <button type="button" id="add">新增</button>
+                    <button type="button" id="edit">修改</button>
+                    <button type="button" id="clear">清空</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <br>
+
+    <!-- 產品列表 -->
+    <div>
+        <table border="1">
+            <thead>
+                <tr >
+                    <th class="rowFlex"></th>
+                    <th class="rowFlex">序號</th>
+                    <th class="rowFlex">製造商</th>
+                    <th class="rowFlex">類別</th>
+                    <th class="rowFlex">底價</th>
+                    <th class="rowFlex">售價</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody id="text">
+
+            </tbody>
+
+        </table>
+    </div>
+
+
+
+
+</body>
+
+</html>

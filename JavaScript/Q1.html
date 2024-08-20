@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模擬封裝與私有-Map</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .flexCol {
+            width: 400px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            border-bottom: 1px solid gray;
+            padding: 10px 0;
+        }
+
+        label {
+            display: inline-block;
+            width: 80px;
+        }
+
+        .btnContainer {
+            padding: 20px 0;
+            width: 400px;
+            height: 60px;
+            border-bottom: 1px solid gray;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+
+            //DOM
+            const putBtn = document.querySelector('#put');
+            const delBtn = document.querySelector('#clear');
+            const text = document.querySelector('#text');
+            let mapStr = '';
+            //模仿Java HashMap
+            const HashMap = function () {
+                let obj = {};
+                return {
+                    put: function (a, b) {
+                        obj[a] = b;
+                    },
+                    keys: function () {
+                        let i = [];
+                        for (let key in obj) {
+                            i.push(key)
+                        }
+                        return i;
+                    },
+                    contains: function (a) {
+                        if (obj[a]) {
+                            return true
+                        } else {
+                            return false
+                        }
+                    },
+                    get: function (a) {
+                        return obj[a];
+                    },
+                    clear: function () {
+                        return obj = {};
+                    }
+                };
+            };
+            const map = new HashMap();
+
+            //新增事件
+            putBtn.addEventListener('click', (e) => {
+                const key = document.querySelector('#key').value;
+                const value = document.querySelector('#value').value;
+                //防呆
+                if (key === '' || value === '') {
+                    alert('請確實輸入資料!');
+                    return
+                }
+                if (!map.contains(key)) {
+                    map.put(key, value)
+                } else {
+                    alert('請勿輸入重複的key!');
+                    return
+                }
+
+                //新增資料
+                map.put(key, value);
+                //畫面渲染
+                mapStr += `${key}：${map.get(key)}<br>`
+                text.innerHTML = mapStr;
+
+            });
+            //刪除事件
+            delBtn.addEventListener('click', (e) => {
+                //資料清空
+                map.clear;
+                //清空畫面
+                document.querySelector('#key').value = '';
+                document.querySelector('#value').value = '';
+                text.innerHTML = '';                         
+            });
+
+        }
+    </script>
+</head>
+
+<body>
+    <!-- 輸入 -->
+    <div class="flexCol">
+        <div><label for="key">KEY</label><input type="text" id="key"> </div>
+        <div><label for="value">VALUE</label><input type="text" id="value"></div>
+
+    </div>
+    <!-- 按鈕 -->
+    <div class="btnContainer">
+        <button id="put">PUT</button>
+        <button id="clear">CLEAR</button>
+    </div>
+    <!-- 畫面渲染 -->
+    <div>
+        <p>【RESULT】</p>
+        <div id="text"></div>
+    </div>
+
+</body>
+
+</html>
