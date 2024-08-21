@@ -10,6 +10,7 @@
         * {
             box-sizing: border-box;
         }
+
         .flexCol {
             width: 400px;
             height: 90px;
@@ -19,10 +20,12 @@
             border-bottom: 1px solid gray;
             padding: 10px 0;
         }
+
         label {
             display: inline-block;
             width: 80px;
         }
+
         .btnContainer {
             padding: 20px 0;
             width: 400px;
@@ -37,29 +40,26 @@
             const putBtn = document.querySelector('#put');
             const delBtn = document.querySelector('#clear');
             const text = document.querySelector('#text');
-            let mapStr = '';
             //模仿Java HashMap
             const map = new HashMap();
             //新增事件
             putBtn.addEventListener('click', (e) => {
                 const key = document.querySelector('#key').value;
                 const value = document.querySelector('#value').value;
-                //防呆.trim()
-                //判斷誰沒填寫
-                if (!key.trim() || !value.trim()) {
+                //防呆
+                if (!key.trim()) {
                     alert('請確實輸入資料!');
                     return;
                 }
-                //.trim()
-                if(map.contains(key)){
+
+                if (map.contains(key.trim())) {
                     alert('請勿輸入重複的key!');
                     return;
                 }
-                
+
                 map.put(key, value)
 
                 //畫面渲染
-                //innerHTML可以用+=
                 text.innerHTML += `${key}：${map.get(key)}<br>`;
                 alert('新增成功!')
             });
@@ -70,9 +70,9 @@
                 //清空畫面
                 document.querySelector('#key').value = '';
                 document.querySelector('#value').value = '';
-                mapStr='';
+                mapStr = '';
                 text.innerHTML = '';
-                alert('刪除成功!')                         
+                alert('刪除成功!')
             });
         }
     </script>
