@@ -8,17 +8,17 @@ var HashMap = function () {
 
         keys: function () {
             //object.key改寫
-            return Object.keys(obj);
+            return Object.keys(map);
         },
         contains: function (key) {
             //array.includes(key)改寫
-            return Object.keys(obj).contains(key);
+            return Object.keys(map).includes(key);
         },
         get: function (key) {
             return map[key];
         },
         clear: function () {
-            return map = {};
+            map = {};
         }
     };
 };
