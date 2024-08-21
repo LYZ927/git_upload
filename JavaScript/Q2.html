@@ -49,11 +49,11 @@
             //新增按鈕
             addBtn.addEventListener('click', (e) => {
                 //是否輸入製造商和類別
-                if (!manu.value) {
+                if (!manu.value.trim()) {
                     alert('請輸入製造商!');
                     return;
                 }
-                if (!category.value) {
+                if (!category.value.trim()) {
                     alert('請輸入類別!');
                     return;
                 }
@@ -91,24 +91,28 @@
                     alert('目前無資料可修改，請至少輸入一筆再修改!');
                     return;
                 }
-
+                
                 let selectedIndex = -1;
-                radios.forEach((radio, index) => {
+                //使用for...of，找到radio對應的index，即跳出迴圈
+                //迴圈每次執行時，entries()會返回[key, value]
+                for(const[index, radio] of radios.entries()){
                     if (radio.checked) {
                         selectedIndex = index;
+                        break;
                     }
-                })
+                }
+
                 if (selectedIndex === -1) {
                     alert('請選擇欲修改的項目!');
                     return;
-                }
+                }               
 
                 //是否輸入製造商和類別
-                if (!manu.value) {
+                if (!manu.value.trim()) {
                     alert('請輸入製造商!');
                     return;
                 }
-                if (!category.value) {
+                if (!category.value.trim()) {
                     alert('請輸入類別!');
                     return;
                 }
