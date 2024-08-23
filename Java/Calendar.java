@@ -24,7 +24,7 @@ public class Calendar {
 		}
 	}
 
-	public static void printCalendar(int enterMonth) {
+	private static void printCalendar(int enterMonth) {
 		// 目前的年份
 		int currentYear = LocalDate.now().getYear();
 

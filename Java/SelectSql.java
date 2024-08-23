@@ -13,22 +13,22 @@ import java.util.Scanner;
 
 public class SelectSql {
 	// SQL指令
-	public static final String QUERY_ALLCARS_SQL ="select MANUFACTURER, TYPE, MIN_PRICE, PRICE from STUDENT.CARS";
-	public static final String QUERY_CARS_SQL = "select MANUFACTURER, TYPE, MIN_PRICE, PRICE from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
-	public static final String INSERT_CARS_SQL = "insert into STUDENT.CARS (MANUFACTURER, TYPE, MIN_PRICE, PRICE) values (?, ?, ?, ?)";
-	public static final String UPDATE_CARS_SQL = "update STUDENT.CARS set  MIN_PRICE = ? , PRICE = ? where MANUFACTURER = ? and TYPE = ? ";
-	public static final String DELETE_STRING = "delete from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
+	private static final String QUERY_ALLCARS_SQL = "select MANUFACTURER, TYPE, MIN_PRICE, PRICE from STUDENT.CARS";
+	private static final String QUERY_CARS_SQL = "select MANUFACTURER, TYPE, MIN_PRICE, PRICE from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
+	private static final String INSERT_CARS_SQL = "insert into STUDENT.CARS (MANUFACTURER, TYPE, MIN_PRICE, PRICE) values (?, ?, ?, ?)";
+	private static final String UPDATE_CARS_SQL = "update STUDENT.CARS set  MIN_PRICE = ? , PRICE = ? where MANUFACTURER = ? and TYPE = ? ";
+	private static final String DELETE_STRING = "delete from STUDENT.CARS where MANUFACTURER = ? and TYPE = ?";
 
 	// 連線資訊
-	public static final String CONN_URL = "jdbc:oracle:thin:@//localhost:1521/XE";
-	public static final String ACCOUNT = "student";
-	public static final String PASSWORD = "student123456";
+	private static final String CONN_URL = "jdbc:oracle:thin:@//localhost:1521/XE";
+	private static final String ACCOUNT = "student";
+	private static final String PASSWORD = "student123456";
 
 	// 四個主要欄位
-	public static final String MANUFACTURER = "MANUFACTURER";
-	public static final String TYPE = "TYPE";
-	public static final String PRICE = "PRICE";
-	public static final String MIN_PRICE = "MIN_PRICE";
+	private static final String MANUFACTURER = "MANUFACTURER";
+	private static final String TYPE = "TYPE";
+	private static final String PRICE = "PRICE";
+	private static final String MIN_PRICE = "MIN_PRICE";
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
@@ -39,7 +39,7 @@ public class SelectSql {
 		doCommand(scanner);
 	}
 
-	public static void doCommand(Scanner scanner) {
+	private static void doCommand(Scanner scanner) {
 		System.out.printf("請選擇以下指令輸入：select, insert, update, delete\n");
 		String command = scanner.next();
 
@@ -65,12 +65,11 @@ public class SelectSql {
 	}
 
 	// 調出所有資料
-	public static void displayAllCars(Scanner scanner) {
+	private static void displayAllCars(Scanner scanner) {
 		List<Map<String, String>> list = new ArrayList<>();
 
 		try (Connection conn = DriverManager.getConnection(CONN_URL, ACCOUNT, PASSWORD);
-				PreparedStatement pstmt = conn
-						.prepareStatement(QUERY_ALLCARS_SQL)) {
+				PreparedStatement pstmt = conn.prepareStatement(QUERY_ALLCARS_SQL)) {
 
 			ResultSet rs = pstmt.executeQuery();
 
@@ -102,7 +101,7 @@ public class SelectSql {
 	}
 
 	// 甲、提供 method: query(製造商,類別);查詢條件為製造商、類別。
-	public static void doQuery(Scanner scanner) {
+	private static void doQuery(Scanner scanner) {
 		try (Connection conn = DriverManager.getConnection(CONN_URL, ACCOUNT, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(QUERY_CARS_SQL);) {
 
@@ -138,7 +137,7 @@ public class SelectSql {
 	};
 
 	// 乙、提供 method: insert(Map);設定所有欄位。
-	public static void doInsert(Scanner scanner) {
+	private static void doInsert(Scanner scanner) {
 		try (Connection conn = DriverManager.getConnection(CONN_URL, ACCOUNT, PASSWORD);) {
 			try {
 				conn.setAutoCommit(false);
@@ -172,7 +171,7 @@ public class SelectSql {
 	}
 
 	// 丙、提供 method: update(Map);by PK (製造商&類別)
-	public static void doUpdate(Scanner scanner) {
+	private static void doUpdate(Scanner scanner) {
 		try (Connection conn = DriverManager.getConnection(CONN_URL, ACCOUNT, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(UPDATE_CARS_SQL)) {
 			try {
@@ -214,7 +213,7 @@ public class SelectSql {
 	}
 
 	// 丁、提供 method: delete(製造商,類別);by PK (製造商&類別)
-	public static void doDelete(Scanner scanner) {
+	private static void doDelete(Scanner scanner) {
 		try (Connection conn = DriverManager.getConnection(CONN_URL, ACCOUNT, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(DELETE_STRING)) {
 			try {
@@ -250,7 +249,7 @@ public class SelectSql {
 	}
 
 	// 輸入製造商、類型
-	public static Map<String, String> enterBasicData(Scanner scanner) {
+	private static Map<String, String> enterBasicData(Scanner scanner) {
 		Map<String, String> data = new HashMap<>();
 		System.out.print("請輸入製造商: ");
 		data.put("manu", scanner.next());
@@ -260,7 +259,7 @@ public class SelectSql {
 	}
 
 	// 輸入底價、售價
-	public static Map<String, String> enterBasicPrice(Scanner scanner) {
+	private static Map<String, String> enterBasicPrice(Scanner scanner) {
 		Map<String, String> data = new HashMap<>();
 		System.out.print("請輸入底價: ");
 		data.put("minPrice", scanner.next());
